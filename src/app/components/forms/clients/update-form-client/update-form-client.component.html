@@ -1,0 +1,23 @@
+<div [formGroup]="updateForm">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Id (Read-Only)</mat-label>
+      <input matInput placeholder="id" formControlName="id" required readonly/>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="name" formControlName="name" required/>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="description" formControlName="description" required/>
+    </mat-form-field>
+    <br>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+  </mat-dialog-actions>
+</div>
