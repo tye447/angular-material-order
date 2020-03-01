@@ -1,5 +1,9 @@
-<nav mat-tab-nav-bar>
-  <a mat-tab-link routerLink="client" routerLinkActive="active">Client</a>
-  <a mat-tab-link routerLink="user" routerLinkActive="active">User</a>
+<nav mat-tab-nav-bar [backgroundColor]="background">
+  <a mat-tab-link *ngFor="let link of links"
+     [routerLink]="link.toLowerCase()"
+     (click)="activeLink = link"
+     [active]="activeLink == link"> {{link}} </a>
 </nav>
+<br>
+<button mat-raised-button color="primary" (click)="logOut()">Log Out</button>
 <router-outlet></router-outlet>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoginService} from '../../services/login/login.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit() {
@@ -26,9 +28,11 @@ export class LoginComponent implements OnInit {
   }
   login() {
     this.loginService.login(this.loginForm.value).subscribe(result => {
-      console.log(result.message);
-      if (result.message === 'success') {
+      if (result.message === 'success' && result.data !== null) {
         this.router.navigateByUrl('home/client').then();
+        this.cookieService.set('user', this.loginForm.value.name);
+      } else {
+        alert('User is not found or invalid parameter to login, please retry!');
       }
     });
   }

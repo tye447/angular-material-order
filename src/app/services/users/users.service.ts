@@ -9,7 +9,7 @@ export class UsersService {
   baseUrl = 'http://127.0.0.1:8008/';
   constructor(private http: HttpClient) { }
   get(): Observable<any> {
-    return this.http.get(this.baseUrl + 'employee/list');
+    return this.http.get<any[]>(this.baseUrl + 'employee/list');
   }
   add(data: HttpParams): Observable<any> {
     return this.http.post(this.baseUrl + 'employee/add', null, {params: data}).pipe();

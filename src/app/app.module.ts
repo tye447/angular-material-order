@@ -9,23 +9,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CommonMaterialModule} from './common.material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import { CreateFormUserComponent } from './components/forms/users/create-form-user/create-form-user.component';
-import { UpdateFormUserComponent } from './components/forms/users/update-form-user/update-form-user.component';
 import { ClientsComponent } from './components/clients/clients.component';
-import { CreateFormClientComponent } from './components/forms/clients/create-form-client/create-form-client.component';
-import { UpdateFormClientComponent } from './components/forms/clients/update-form-client/update-form-client.component';
 import { HomeComponent } from './components/home/home.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     LoginComponent,
-    CreateFormUserComponent,
-    UpdateFormUserComponent,
     ClientsComponent,
-    CreateFormClientComponent,
-    UpdateFormClientComponent,
     HomeComponent,
   ],
   imports: [
@@ -35,7 +28,10 @@ import { HomeComponent } from './components/home/home.component';
     CommonMaterialModule,
     HttpClientModule,
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    CookieService
+    ],
   bootstrap: [AppComponent],
   entryComponents: []
 })

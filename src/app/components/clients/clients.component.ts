@@ -1,18 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ClientsService} from '../../services/clients/clients.service';
-import {CreateFormClientComponent} from '../forms/clients/create-form-client/create-form-client.component';
-import {UpdateFormClientComponent} from '../forms/clients/update-form-client/update-form-client.component';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NavigationEnd, Router} from '@angular/router';
+import {MatSort} from '@angular/material/sort';
+import {CookieService} from 'ngx-cookie-service';
 
 export interface ClientModel {
   id: number;
   name: string;
   description: string;
 }
-const data: ClientModel[] = [];
-
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -20,57 +19,104 @@ const data: ClientModel[] = [];
 })
 export class ClientsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['id', 'name', 'description', 'operation'];
   dataSource: MatTableDataSource<ClientModel>;
-  constructor(private clientsService: ClientsService, private dialog: MatDialog) { }
-
-
-  ngOnInit(): void {
-    this.getData();
+  createForm: any;
+  updateForm: any;
+  id: any;
+  name: any;
+  description: any;
+  constructor(private clientsService: ClientsService, private fb: FormBuilder,
+              private router: Router, private cookieService: CookieService) {
+    this.router.events.subscribe(() => {
+      this.reset();
+    });
+  }
+  ngOnInit() {
+    this.checkCookie();
+  }
+  checkCookie() {
+    const cookie = this.cookieService.get('user');
+    if (cookie !== null && cookie !== undefined && cookie.length > 0) {
+      this.reset();
+      this.getData();
+    } else {
+      this.router.navigateByUrl('login').then();
+    }
+  }
+  reset() {
+    this.id = '';
+    this.name = '';
+    this.description = '';
+    if (document.getElementById('updateForm') !== null) {
+      document.getElementById('updateForm').hidden = true;
+    }
+    if (document.getElementById('createForm') !== null) {
+      document.getElementById('createForm').hidden = false;
+    }
+  }
+  add() {
+    this.reset();
+  }
+  update(item) {
+    document.getElementById('updateForm').hidden = false;
+    document.getElementById('createForm').hidden = true;
+    this.id = item.id;
+    this.name = item.name;
+    this.description = item.description;
+  }
+  delete(item) {
+    this.clientsService.delete(item).subscribe(() => {
+      this.getData();
+      this.reset();
+    });
+  }
+  addClient() {
+    this.buildFormCreate();
+  }
+  updateClient() {
+    this.buildFormUpdate();
+  }
+  buildFormCreate() {
+    this.createForm = this.fb.group({
+      name: [this.name, Validators.required],
+      description: [this.description, Validators.required]
+    });
+    if (this.createForm.valid) {
+      this.clientsService.add(this.createForm.value).subscribe(() => this.getData());
+    } else {
+      alert('Field null exist! Please fill all fields!');
+    }
+  }
+  buildFormUpdate() {
+    this.updateForm = this.fb.group({
+      id: [this.id, Validators.required],
+      name: [this.name, Validators.required],
+      description: [this.description, Validators.required]
+    });
+    if (this.updateForm.valid) {
+      this.clientsService.add(this.updateForm.value).subscribe(() => this.getData());
+    } else {
+      alert('Field null exist! Please fill all fields!');
+    }
   }
   getData() {
     this.clientsService.get().subscribe(result => {
-      data.length = 0;
-      this.createClientElement(data, result.data);
+      const data: ClientModel[] = result.data;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
-  deleteData(item) {
-    this.clientsService.delete(item).subscribe(result => {
-      console.log(result.data);
-    });
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-  createClientElement(dataClient: ClientModel[], dataResult: any[]) {
-    dataResult.forEach(item => {
-      dataClient.push(item);
-    });
-  }
-  openForm(formComponent, dialogConfig: MatDialogConfig) {
-    const dialogRef = this.dialog.open(formComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
-      this.getData();
-    });
-  }
-  openCreateForm() {
-    const dialogConfigCreate = new MatDialogConfig();
-    dialogConfigCreate.disableClose = true;
-    dialogConfigCreate.autoFocus = true;
-    this.openForm(CreateFormClientComponent, dialogConfigCreate);
-  }
-  openUpdateForm(item) {
-    const dialogConfigUpdate = new MatDialogConfig();
-    dialogConfigUpdate.disableClose = true;
-    dialogConfigUpdate.autoFocus = true;
-    dialogConfigUpdate.data = item;
-    this.openForm(UpdateFormClientComponent, dialogConfigUpdate);
-  }
-  delete(item) {
-    console.log((item.id));
-    this.deleteData(item);
-    setTimeout(() => {
-      this.getData();
-    }, 200);
-  }
+
 
 }

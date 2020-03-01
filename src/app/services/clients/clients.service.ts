@@ -18,7 +18,6 @@ export class ClientsService {
     return this.http.post(this.baseUrl + 'client/update', null, {params: data}).pipe();
   }
   delete(data: HttpParams): Observable<any> {
-    console.log(data);
     return this.http.delete(this.baseUrl + 'client/delete', {params: data}).pipe();
   }
 }

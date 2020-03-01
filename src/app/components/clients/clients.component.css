@@ -1,16 +1,9 @@
-table {
-  width: 80%;
-  margin:auto
-}
 button {
   margin: 16px 8px;
 }
-div{
-  text-align:center
+mat-grid-tile {
+  background: floralwhite;
 }
 .mat-header-cell{
   text-align:center
-}
-h1{
-  text-align: center;
 }

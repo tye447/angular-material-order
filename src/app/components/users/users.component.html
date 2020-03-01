@@ -1,30 +1,103 @@
-<h1>User</h1>
-<div>
-  <div>
-    <button mat-raised-button (click)="openCreateForm()">Add</button>
-  </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID</th>
-      <td mat-cell *matCellDef="let item"> {{item.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let item"> {{item.name}} </td>
-    </ng-container>
-    <ng-container matColumnDef="age">
-      <th mat-header-cell *matHeaderCellDef> Age </th>
-      <td mat-cell *matCellDef="let item"> {{item.age}} </td>
-    </ng-container>
-    <ng-container matColumnDef="operation">
-      <th mat-header-cell *matHeaderCellDef> Operation </th>
-      <td mat-cell *matCellDef="let item">
-        <button mat-button (click)="openUpdateForm(item)">Update</button>
-        <button mat-button (click)="delete(item)">Delete</button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<div style="text-align: center">
+  <h1>User</h1>
+</div>
+<div id="table">
+  <mat-grid-list cols="8" rowHeight="700px">
+    <mat-grid-tile [colspan]="3">
+      <div id="createForm">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Add User</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form (ngSubmit)="addUser()">
+              <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="name" [(ngModel)]="name" name="name" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Age</mat-label>
+                <input matInput placeholder="age" [(ngModel)]="age" name="age" required oninput="value=value.replace(/[^\d]/g,'')"/>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="password" [(ngModel)]="password" name="password" type="password" required/>
+              </mat-form-field>
+              <br>
+              <button mat-raised-button color="primary" type="submit">Save</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div id="updateForm" hidden>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Update User</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form (ngSubmit)="updateUser()">
+              <mat-form-field appearance="fill">
+                <mat-label>Id</mat-label>
+                <input matInput placeholder="id" [(ngModel)]="id" name="id" required readonly/>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="name" [(ngModel)]="name" name="name" required/>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Age</mat-label>
+                <input matInput placeholder="age" [(ngModel)]="age" name="age" required oninput="value=value.replace(/[^\d]/g,'')"/>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="password" [(ngModel)]="password" name="password" required/>
+              </mat-form-field>
+              <br>
+              <button mat-raised-button color="primary" type="submit">Save</button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="5">
+      <div style="width: 80%">
+        <div>
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+          </mat-form-field>
+          <button mat-fab color="primary" style="font-size: 30px" (click)="add()">+</button>
+        </div>
+        <table style="width: 100%" mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 20%"> ID</th>
+            <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 30%"> Name </th>
+            <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10%"> Age </th>
+            <td mat-cell *matCellDef="let item"> {{item.age}} </td>
+          </ng-container>
+          <ng-container matColumnDef="operation">
+            <th mat-header-cell *matHeaderCellDef style="width: 30%"> Operation </th>
+            <td mat-cell *matCellDef="let item">
+              <button mat-raised-button color="primary" (click)="update(item)">Update</button>
+              <button mat-raised-button color="warn" (click)="delete(item)">Delete</button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSize]="[7]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
