@@ -18,3 +18,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 	> ng serve
 	
 The app will start running at http://localhost:4200.
+
+Default account: 
+
+Name: admin
+
+Password: admin 
