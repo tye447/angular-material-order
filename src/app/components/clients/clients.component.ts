@@ -96,7 +96,7 @@ export class ClientsComponent implements OnInit {
       description: [this.description, Validators.required]
     });
     if (this.updateForm.valid) {
-      this.clientsService.add(this.updateForm.value).subscribe(() => this.getData());
+      this.clientsService.update(this.updateForm.value).subscribe(() => this.getData());
     } else {
       alert('Field null exist! Please fill all fields!');
     }

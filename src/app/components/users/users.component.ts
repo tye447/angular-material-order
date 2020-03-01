@@ -104,7 +104,7 @@ export class UsersComponent implements OnInit {
       password: [this.password, Validators.required]
     });
     if (this.updateForm.valid) {
-      this.usersService.add(this.updateForm.value).subscribe(() => this.getData());
+      this.usersService.update(this.updateForm.value).subscribe(() => this.getData());
     } else {
       alert('Field null exist! Please fill all fields!');
     }
