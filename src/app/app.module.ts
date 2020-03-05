@@ -13,6 +13,8 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { HomeComponent } from './components/home/home.component';
 import {CookieService} from 'ngx-cookie-service';
 import { FormComponent } from './components/form/form.component';
+import { ProductsComponent } from './components/products/products.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { FormComponent } from './components/form/form.component';
     ClientsComponent,
     HomeComponent,
     FormComponent,
+    ProductsComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
