@@ -1,0 +1,36 @@
+<mat-dialog-content [formGroup]="form">
+  <p>
+    <mat-form-field *ngIf="action === 'update' && target === 'client'">
+      <mat-label>Id</mat-label>
+      <input matInput formControlName="id" required readonly>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field *ngIf="target === 'client'">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" required>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field *ngIf="target === 'user'">
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="age" required>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field *ngIf="target === 'user'">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required>
+    </mat-form-field>
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="save()">Save</button>
+</mat-dialog-actions>

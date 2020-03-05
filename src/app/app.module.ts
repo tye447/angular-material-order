@@ -12,6 +12,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ClientsComponent } from './components/clients/clients.component';
 import { HomeComponent } from './components/home/home.component';
 import {CookieService} from 'ngx-cookie-service';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {CookieService} from 'ngx-cookie-service';
     LoginComponent,
     ClientsComponent,
     HomeComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,

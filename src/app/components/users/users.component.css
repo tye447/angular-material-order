@@ -1,9 +1,26 @@
 button {
-  margin: 16px 8px;
+  margin: 10px 5px;
 }
-mat-grid-tile {
+body{
   background: floralwhite;
 }
-.mat-header-cell{
-  text-align:center
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+h1 {
+  text-align: center;
+}
+.components{
+  display: inline-block;
+  width: 100%;
+}
+.filter{
+  float: left;
+  width: 20%;
+}
+.addButton{
+  float: right;
+  font-size: 30px;
 }

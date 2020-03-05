@@ -6,6 +6,9 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatSort} from '@angular/material/sort';
 import {CookieService} from 'ngx-cookie-service';
+import {ClientModel} from '../clients/clients.component';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {FormComponent} from '../form/form.component';
 
 export interface UserElement {
   id: number;
@@ -23,6 +26,9 @@ export class UsersComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['id', 'name', 'age', 'operation'];
   dataSource: MatTableDataSource<UserElement>;
+  action: string;
+  client: UserElement;
+  target = 'user';
   createForm: any;
   updateForm: any;
   id: any;
@@ -30,10 +36,11 @@ export class UsersComponent implements OnInit {
   age: any;
   password: any;
   constructor(private usersService: UsersService, private fb: FormBuilder,
-              private router: Router, private cookieService: CookieService) {
-    this.router.events.subscribe(() => {
+              private router: Router, private cookieService: CookieService,
+              private dialog: MatDialog) {
+    /*this.router.events.subscribe(() => {
       this.reset();
-    });
+    });*/
   }
   ngOnInit() {
     this.checkCookie();
@@ -41,39 +48,23 @@ export class UsersComponent implements OnInit {
   checkCookie() {
     const cookie = this.cookieService.get('user');
     if (cookie !== null && cookie !== undefined && cookie.length > 0) {
-      this.reset();
       this.getData();
     } else {
       this.router.navigateByUrl('login').then();
     }
   }
-  reset() {
-    this.id = null;
-    this.name = null;
-    this.age = null;
-    this.password = null;
-    if (document.getElementById('updateForm') !== null) {
-      document.getElementById('updateForm').hidden = true;
-    }
-    if (document.getElementById('createForm') !== null) {
-      document.getElementById('createForm').hidden = false;
-    }
-  }
   add() {
-    this.reset();
+    this.action = 'add';
+    this.openDialog('', this.action, this.target);
+    // this.reset();
   }
   update(item) {
-    document.getElementById('updateForm').hidden = false;
-    document.getElementById('createForm').hidden = true;
-    this.id = item.id;
-    this.name = item.name;
-    this.age = item.age;
-    this.password = item.password;
+    this.action = 'update';
+    this.openDialog(item, this.action, this.target);
   }
   delete(item) {
     this.usersService.delete(item).subscribe(() => {
       this.getData();
-      this.reset();
     });
   }
   addUser() {
@@ -123,5 +114,17 @@ export class UsersComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  openDialog(item, action: string, target: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      action, item, target
+    };
+    const dialogRef = this.dialog.open(FormComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+      this.getData();
+    });
   }
 }

@@ -1,9 +1,10 @@
-<nav mat-tab-nav-bar [backgroundColor]="background">
-  <a mat-tab-link *ngFor="let link of links"
-     [routerLink]="link.toLowerCase()"
-     (click)="activeLink = link"
-     [active]="activeLink == link"> {{link}} </a>
-</nav>
-<br>
-<button mat-raised-button color="primary" (click)="logOut()">Log Out</button>
+<div style="display: inline-list-item">
+  <button mat-raised-button color="primary" (click)="logOut()">Log Out</button>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links"
+       [routerLink]="link.toLowerCase()"
+       (click)="activeLink = link"
+       [active]="activeLink == link"> {{link}} </a>
+  </nav>
+</div>
 <router-outlet></router-outlet>

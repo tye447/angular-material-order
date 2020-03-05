@@ -1,15 +1,15 @@
-<div>
-  <div [formGroup]="loginForm" style="text-align: center">
+<div style="text-align: center">
+  <form #f="ngForm" (ngSubmit)="login(f)">
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="name" formControlName="name" required/>
+      <input matInput name="name" ngModel required #name="ngModel"/>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput placeholder="password" formControlName="password" required/>
+      <input matInput name="password" ngModel required #password="ngModel"/>
     </mat-form-field>
     <br>
-    <button mat-raised-button color="primary" (click)="login()">Login</button>
-  </div>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!f.form.valid">Login</button>
+  </form>
 </div>

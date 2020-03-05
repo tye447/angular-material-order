@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {ThemePalette} from '@angular/material/core';
 import {CookieService} from 'ngx-cookie-service';
 
 @Component({
@@ -11,7 +10,6 @@ import {CookieService} from 'ngx-cookie-service';
 export class HomeComponent implements OnInit {
   links = ['Client', 'User'];
   activeLink = this.links[0];
-  background: ThemePalette = 'primary';
   constructor(private router: Router, private cookieService: CookieService) { }
 
   ngOnInit(): void {
