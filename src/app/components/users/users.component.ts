@@ -1,19 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {UsersService} from '../../services/users/users.service';
-import {FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatSort} from '@angular/material/sort';
 import {CookieService} from 'ngx-cookie-service';
-import {ClientModel} from '../clients/clients.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {FormComponent} from '../form/form.component';
+import {CommonService} from '../../services/common/common.service';
 
 export interface UserElement {
-  id: number;
-  name: string;
-  age: string;
+  id: any;
+  name: any;
+  age: any;
+  password: any;
 }
 
 @Component({
@@ -27,22 +26,13 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'age', 'operation'];
   dataSource: MatTableDataSource<UserElement>;
   action: string;
-  client: UserElement;
+  user: UserElement;
   target = 'user';
-  createForm: any;
-  updateForm: any;
-  id: any;
-  name: any;
-  age: any;
-  password: any;
-  constructor(private usersService: UsersService, private fb: FormBuilder,
-              private router: Router, private cookieService: CookieService,
-              private dialog: MatDialog) {
-    /*this.router.events.subscribe(() => {
-      this.reset();
-    });*/
-  }
+  constructor(private router: Router, private cookieService: CookieService,
+              private dialog: MatDialog, private commonService: CommonService) {}
   ngOnInit() {
+    this.action = 'add';
+    this.user = {id: '', name: '', age: '', password: ''};
     this.checkCookie();
   }
   checkCookie() {
@@ -56,52 +46,18 @@ export class UsersComponent implements OnInit {
   add() {
     this.action = 'add';
     this.openDialog('', this.action, this.target);
-    // this.reset();
   }
   update(item) {
     this.action = 'update';
     this.openDialog(item, this.action, this.target);
   }
   delete(item) {
-    this.usersService.delete(item).subscribe(() => {
+    this.commonService.delete('user', item).subscribe(() => {
       this.getData();
     });
   }
-  addUser() {
-    this.buildFormCreate();
-  }
-  updateUser() {
-    this.buildFormUpdate();
-  }
-  buildFormCreate() {
-    this.createForm = this.fb.group({
-      name: [this.name, Validators.required],
-      age: [this.age, Validators.required],
-      password: [this.password, Validators.required]
-    });
-    if (this.createForm.valid) {
-      this.usersService.add(this.createForm.value).subscribe(res => {
-        this.getData();
-      });
-    } else {
-      alert('Field null exist! Please fill all fields!');
-    }
-  }
-  buildFormUpdate() {
-    this.updateForm = this.fb.group({
-      id: [this.id, Validators.required],
-      name: [this.name, Validators.required],
-      age: [this.age, Validators.required],
-      password: [this.password, Validators.required]
-    });
-    if (this.updateForm.valid) {
-      this.usersService.update(this.updateForm.value).subscribe(() => this.getData());
-    } else {
-      alert('Field null exist! Please fill all fields!');
-    }
-  }
   getData() {
-    this.usersService.get().subscribe(result => {
+    this.commonService.get('user').subscribe(result => {
       const data: UserElement[] = result.data;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;

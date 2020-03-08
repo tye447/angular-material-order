@@ -8,7 +8,7 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  links = ['Client', 'User'];
+  links = ['Client', 'User', 'Product', 'Order'];
   activeLink = this.links[0];
   constructor(private router: Router, private cookieService: CookieService) { }
 

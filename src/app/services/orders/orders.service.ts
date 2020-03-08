@@ -5,20 +5,19 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class OrdersService {
   baseUrl = 'http://127.0.0.1:8008/';
   constructor(private http: HttpClient) { }
   get(): Observable<any> {
-    return this.http.get<any[]>(this.baseUrl + 'employee/list');
+    return this.http.get(this.baseUrl + 'commande/list');
   }
   add(data: HttpParams): Observable<any> {
-    return this.http.post(this.baseUrl + 'employee/add', null, {params: data}).pipe();
+    return this.http.post(this.baseUrl + 'commande/add', null, {params: data}).pipe();
   }
   update(data: HttpParams): Observable<any> {
-    return this.http.post(this.baseUrl + 'employee/update', null, {params: data}).pipe();
+    return this.http.post(this.baseUrl + 'commande/update', null, {params: data}).pipe();
   }
   delete(data: HttpParams): Observable<any> {
-    console.log(data);
-    return this.http.delete(this.baseUrl + 'employee/delete', {params: data}).pipe();
+    return this.http.delete(this.baseUrl + 'commande/delete', {params: data}).pipe();
   }
 }

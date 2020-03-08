@@ -6,6 +6,8 @@ import {ClientsComponent} from './components/clients/clients.component';
 import {HomeComponent} from './components/home/home.component';
 import {SimpleReuseStrategy} from './simple-reuse-strategy';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {ProductsComponent} from './components/products/products.component';
+import {OrdersComponent} from './components/orders/orders.component';
 
 
 const routes: Routes = [
@@ -13,15 +15,21 @@ const routes: Routes = [
     path: '', redirectTo: 'login', pathMatch: 'full'
   },
   {
-    path: 'login', component: LoginComponent, data: {keep: true, key: 'login'}
+    path: 'login', component: LoginComponent, data: {keep: false, key: 'login'}
   },
   {
     path: 'home', component: HomeComponent, children: [
       {
-        path: 'client', component: ClientsComponent, data: {keep: true, key: 'clients'}
+        path: 'client', component: ClientsComponent, data: {keep: false, key: 'clients'}
       },
       {
-        path: 'user', component: UsersComponent, data: {keep: true, key: 'users'}
+        path: 'user', component: UsersComponent, data: {keep: false, key: 'users'}
+      },
+      {
+        path: 'product', component: ProductsComponent, data: {keep: false, key: 'products'}
+      },
+      {
+        path: 'order', component: OrdersComponent, data: {keep: false, key: 'orders'}
       }
     ]
   }
