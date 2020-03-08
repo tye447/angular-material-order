@@ -1,7 +1,6 @@
-import {Component, Inject, OnChanges, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {OrdersService} from '../../services/orders/orders.service';
 import {CommonService} from '../../services/common/common.service';
 
 @Component({
@@ -21,7 +20,6 @@ export class FormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<FormComponent>,
-    private ordersService: OrdersService,
     private commonService: CommonService,
     @Inject(MAT_DIALOG_DATA) data) {
     this.item = data.item;
@@ -76,8 +74,6 @@ export class FormComponent implements OnInit {
             quantity: [this.item.quantity, [Validators.required]]
           });
         }
-
-
         break;
       }
     }
@@ -94,59 +90,16 @@ export class FormComponent implements OnInit {
     });
   }
   save() {
-    console.log(this.form.value);
-    switch (this.target) {
-      case 'client': {
-        if (this.action === 'add') {
-          this.commonService.add(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        } else {
-          this.commonService.update(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        }
-        break;
-      }
-      case 'user': {
-        if (this.action === 'add') {
-          this.commonService.add(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        } else {
-          this.commonService.update(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        }
-        break;
-      }
-      case 'product': {
-        if (this.action === 'add') {
-          this.commonService.add(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        } else {
-          this.commonService.update(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        }
-        break;
-      }
-      case 'order': {
-        if (this.action === 'add') {
-          this.commonService.add(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        } else {
-          this.commonService.update(this.target, this.form.value).subscribe(res => {
-            this.dialogRef.close();
-          });
-        }
-        break;
-      }
+    if (this.action === 'add') {
+      this.commonService.add(this.target, this.form.value).subscribe(res => {
+        this.dialogRef.close();
+      });
+    } else {
+      this.commonService.update(this.target, this.form.value).subscribe(res => {
+        this.dialogRef.close();
+      });
     }
   }
-
   close() {
     this.dialogRef.close();
   }
