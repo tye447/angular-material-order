@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gh-pages": "ng build --prod --output-path dist --base-href https://tianjianye.github.io/Angular-Material/ && ngh"
+    "gh-pages": "ng build --prod --output-path dist --base-href https://tye447.github.io/angular-material-order/ && ngh"
   },
   "private": true,
   "dependencies": {

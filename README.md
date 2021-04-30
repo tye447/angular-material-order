@@ -4,17 +4,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Steps to Setup BackEnd
 	
-	Reference： https://github.com/tianjianye/Angular-Material
+	Reference： https://github.com/tye447/angular-material-order
 
 ## Steps to Setup FrontEnd
 
 ### 1. Clone the application
 
-	> git clone https://github.com/tianjianye/Angular-Material.git
+	> git clone https://github.com/tye447/angular-material-order.git
 
 ### 2. Run the application
 
-	> cd Angular-Material
+	> cd angular-material-order
 	> ng serve
 	
 The app will start running at http://localhost:4200.
