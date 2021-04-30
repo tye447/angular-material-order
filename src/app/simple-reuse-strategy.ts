@@ -1,5 +1,7 @@
 import {RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle} from '@angular/router';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class SimpleReuseStrategy implements RouteReuseStrategy {
 
   cacheRouters: { [key: string]: any } = {};

@@ -1,4 +1,4 @@
-import {OnInit, ViewChild} from '@angular/core';
+import { OnInit, ViewChild, Directive } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -8,6 +8,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {CommonService} from '../services/common/common.service';
 import {FormComponent} from './form/form.component';
 
+@Directive()
 export class CommonComponent implements OnInit{
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
