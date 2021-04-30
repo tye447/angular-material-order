@@ -3,7 +3,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Router} from '@angular/router';
-import {CookieService} from 'ngx-cookie-service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {CommonService} from '../services/common/common.service';
 import {FormComponent} from './form/form.component';
@@ -16,13 +15,11 @@ export class CommonComponent implements OnInit{
   action: string;
   target: string;
   router: Router;
-  cookieService: CookieService;
   dialog: MatDialog;
   commonService: CommonService;
-  constructor(router: Router, cookieService: CookieService,
+  constructor(router: Router,
               dialog: MatDialog, commonService: CommonService) {
     this.router = router;
-    this.cookieService = cookieService;
     this.dialog = dialog;
     this.commonService = commonService;
   }
@@ -30,7 +27,7 @@ export class CommonComponent implements OnInit{
     this.checkCookie();
   }
   checkCookie() {
-    const cookie = this.cookieService.get('user');
+    const cookie = window.sessionStorage.getItem('user');
     if (cookie !== null && cookie !== undefined && cookie.length > 0) {
       this.getData();
     } else {

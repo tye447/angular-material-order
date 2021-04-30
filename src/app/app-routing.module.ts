@@ -23,13 +23,13 @@ const routes: Routes = [
         path: 'client', component: ClientsComponent, data: {keep: false, key: 'clients'}
       },
       {
-        path: 'user', component: UsersComponent, data: {keep: false, key: 'users'}
+        path: 'employee', component: UsersComponent, data: {keep: false, key: 'users'}
       },
       {
         path: 'product', component: ProductsComponent, data: {keep: false, key: 'products'}
       },
       {
-        path: 'order', component: OrdersComponent, data: {keep: false, key: 'orders'}
+        path: 'commande', component: OrdersComponent, data: {keep: false, key: 'orders'}
       }
     ]
   }

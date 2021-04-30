@@ -8,15 +8,15 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  links = ['Client', 'User', 'Product', 'Order'];
+  links = ['Client', 'Employee', 'Product', 'Commande'];
   activeLink = this.links[0];
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
   logOut() {
     this.router.navigate(['/login']).then();
-    this.cookieService.delete('user');
+    window.sessionStorage.removeItem('user');
   }
 
 }

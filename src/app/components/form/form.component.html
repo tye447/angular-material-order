@@ -6,7 +6,7 @@
     </mat-form-field>
   </p>
   <p>
-    <mat-form-field *ngIf="target !== 'order'">
+    <mat-form-field *ngIf="target !== 'commande'">
       <mat-label>Name</mat-label>
       <input matInput placeholder="name" formControlName="name" required>
     </mat-form-field>
@@ -17,7 +17,7 @@
       <input matInput placeholder="description" formControlName="description" required>
     </mat-form-field>
   </p>
-  <div *ngIf="target === 'user'">
+  <div *ngIf="target === 'employee'">
     <p>
       <mat-form-field>
         <mat-label>Age</mat-label>
@@ -47,7 +47,7 @@
     </p>
   </div>
 
-  <div *ngIf="target === 'order'">
+  <div *ngIf="target === 'commande'">
     <p>
       <mat-form-field>
         <mat-label>Client_name</mat-label>

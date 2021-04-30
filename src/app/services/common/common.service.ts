@@ -3,12 +3,9 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
-import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {FormComponent} from '../../components/form/form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +16,9 @@ export class CommonService {
   dataSource: MatTableDataSource<any>;
   baseUrl = 'http://127.0.0.1:8008/';
   http: HttpClient;
-  cookieService: CookieService;
   router: Router;
-  constructor(http: HttpClient, cookieService: CookieService, router: Router) {
+  constructor(http: HttpClient, router: Router) {
     this.http = http;
-    this.cookieService = cookieService;
     this.router = router;
   }
   get(target: string): Observable<any> {
@@ -39,7 +34,7 @@ export class CommonService {
     return this.http.delete(this.baseUrl + target + '/delete', {params: data}).pipe();
   }
   confirm(data: HttpParams): Observable<any> {
-    return this.http.post(this.baseUrl + 'order/confirm', null, {params: data}).pipe(catchError(this.errorHandler));
+    return this.http.post(this.baseUrl + 'commande/confirm', null, {params: data}).pipe(catchError(this.errorHandler));
   }
   private errorHandler(error: HttpErrorResponse) {
     if (error !== null) {

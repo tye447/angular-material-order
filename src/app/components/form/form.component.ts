@@ -37,7 +37,7 @@ export class FormComponent implements OnInit {
         });
         break;
       }
-      case 'user': {
+      case 'employee': {
         this.form = this.fb.group({
           id: [this.item.id, []],
           name: [this.item.name, [Validators.required]],
@@ -55,7 +55,7 @@ export class FormComponent implements OnInit {
         });
         break;
       }
-      case 'order': {
+      case 'commande': {
         this.getData();
         if (this.action === 'add') {
           this.form = this.fb.group({
@@ -82,7 +82,7 @@ export class FormComponent implements OnInit {
     this.commonService.get('client').subscribe(res => {
       this.clients = res.data;
     });
-    this.commonService.get('user').subscribe(res => {
+    this.commonService.get('employee').subscribe(res => {
       this.users = res.data;
     });
     this.commonService.get('product').subscribe(res => {
