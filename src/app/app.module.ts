@@ -11,7 +11,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ClientsComponent } from './components/clients/clients.component';
 import { HomeComponent } from './components/home/home.component';
-import {CookieService} from 'ngx-cookie-service';
 import { FormComponent } from './components/form/form.component';
 import { ProductsComponent } from './components/products/products.component';
 import { OrdersComponent } from './components/orders/orders.component';
@@ -35,8 +34,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     HttpClientModule,
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    CookieService
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
     ],
   bootstrap: [AppComponent],
   entryComponents: []
